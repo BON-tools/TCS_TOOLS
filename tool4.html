@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩家管理系統</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><a href="#" onclick="showSection('playerSearchSection')">玩家資料查詢</a></li>
+            <li><a href="#" onclick="showSection('playerManagementSection')">玩家管理</a></li>
+            <li><a href="#" onclick="showSection('chatManagementSection')">聊天室管理</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>玩家管理系統</h1>
+
+        <div id="playerSearchSection" class="section">
+            <h2>玩家資料查詢</h2>
+            <form id="playerSearchForm">
+                <div class="form-group">
+                    <label for="playerId">玩家唯一ID</label>
+                    <input type="text" id="playerId" name="playerId">
+                </div>
+                <div class="form-group">
+                    <label for="playerAccount">玩家帳號</label>
+                    <input type="text" id="playerAccount" name="playerAccount">
+                </div>
+                <div class="form-group">
+                    <label for="playerVip">VIP等級</label>
+                    <select id="playerVip" name="playerVip">
+                        <option value="ALL">ALL</option>
+                        <option value="VIP1">VIP1</option>
+                        <option value="VIP2">VIP2</option>
+                        <option value="VIP3">VIP3</option>
+                        <option value="VIP4">VIP4</option>
+                        <option value="VIP5">VIP5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="playerType">玩家類型</label>
+                    <select id="playerType" name="playerType">
+                        <option value="正式帳號" selected>正式帳號</option>
+                        <option value="測試帳號">測試帳號</option>
+                        <option value="ALL">ALL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="playerNickname">玩家暱稱</label>
+                    <input type="text" id="playerNickname" name="playerNickname">
+                </div>
+                <div class="form-group">
+                    <label for="registerIp">註冊IP</label>
+                    <input type="text" id="registerIp" name="registerIp">
+                </div>
+                <div class="form-group">
+                    <label for="lastLoginIp">最後一次登入IP</label>
+                    <input type="text" id="lastLoginIp" name="lastLoginIp">
+                </div>
+                <div class="form-group">
+                    <label for="accountStatus">帳號狀態</label>
+                    <select id="accountStatus" name="accountStatus">
+                        <option value="啟用" selected>啟用</option>
+                        <option value="停用">停用</option>
+                        <option value="刪除">刪除</option>
+                        <option value="鎖定">鎖定</option>
+                        <option value="ALL">ALL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerTime">註冊時間</label>
+                    <input type="datetime-local" id="registerTime" name="registerTime">
+                </div>
+                <div class="form-group">
+                    <label for="lastLoginTime">最後登入時間</label>
+                    <input type="datetime-local" id="lastLoginTime" name="lastLoginTime">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">手機門號</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="registerChannel">註冊渠道</label>
+                    <input type="text" id="registerChannel" name="registerChannel">
+                </div>
+                <button type="submit">查詢</button>
+                <button type="button" onclick="exportCSV()">匯出CSV</button>
+            </form>
+        </div>
+
+        <div id="playerManagementSection" class="section" style="display: none;">
+            <h2>玩家管理</h2>
+            <form id="playerManagementForm">
+                <div class="form-group">
+                    <label for="playerIdManagement">玩家唯一ID</label>
+                    <input type="text" id="playerIdManagement" name="playerIdManagement">
+                </div>
+                <button type="button" onclick="lockPlayer()">玩家帳號鎖定</button>
+                <button type="button" onclick="kickPlayer()">踢玩家下線</button>
+                <div class="form-group">
+                    <label for="vipLevel">VIP等級調整</label>
+                    <select id="vipLevel" name="vipLevel">
+                        <option value="VIP1">VIP1</option>
+                        <option value="VIP2">VIP2</option>
+                        <option value="VIP3">VIP3</option>
+                        <option value="VIP4">VIP4</option>
+                        <option value="VIP5">VIP5</option>
+                    </select>
+                </div>
+                <button type="button" onclick="adjustVipLevel()">確定VIP等級調整</button>
+                <button type="button" onclick="forbidGifts()">禁止玩家贈禮</button>
+            </form>
+        </div>
+
+        <div id="chatManagementSection" class="section" style="display: none;">
+            <h2>聊天室管理</h2>
+            <form id="chatManagementForm">
+                <div class="form-group">
+                    <label for="playerIdChat">玩家唯一ID</label>
+                    <input type="text" id="playerIdChat" name="playerIdChat">
+                </div>
+                <div class="form-group">
+                    <label for="muteDuration">禁言時間（分鐘，設置0為永久）</label>
+                    <input type="number" id="muteDuration" name="muteDuration" min="0">
+                </div>
+                <button type="button" onclick="mutePlayer()">禁止玩家發言</button>
+                
+                <div class="form-group">
+                    <label for="bannedWordsAction">禁字表管理</label>
+                    <select id="bannedWordsAction" name="bannedWordsAction" onchange="handleBannedWordsAction()">
+                        <option value="">選擇操作</option>
+                        <option value="import">匯入禁字表</option>
+                        <option value="export">匯出禁字表</option>
+                        <option value="add">手動添加禁字</option>
+                    </select>
+                </div>
+                
+                <button type="button" onclick="viewReports()">訊息舉報清單</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>查詢結果</h2>
+            <table id="searchResults" class="results-table">
+                <!-- 這裡將顯示查詢結果 -->
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
