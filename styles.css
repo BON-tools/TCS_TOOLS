@@ -1,12 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
-    padding: 20px;
 }
 
 h1, h2 {
@@ -63,23 +61,51 @@ button {
     background-color: #f2f2f2;
 }
 
-.sidebar {
-    width: 200px;
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-right: 1px solid #ddd;
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .form-group {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        width: 100%;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px 0;
+        margin-bottom: 10px;
+    }
+
+    .results-table {
+        font-size: 10px; /* 繼續縮小文字大小 */
+    }
 }
 
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+    }
 
-.sidebar li {
-    margin-bottom: 10px;
-}
+    .form-group {
+        padding: 0;
+    }
 
-.sidebar a {
-    text-decoration: none;
-    color: #007BFF;
+    .results-table {
+        font-size: 8px; /* 進一步縮小文字大小 */
+    }
+
+    .results-table th, .results-table td {
+        padding: 2px; /* 進一步縮小填充 */
+    }
 }
